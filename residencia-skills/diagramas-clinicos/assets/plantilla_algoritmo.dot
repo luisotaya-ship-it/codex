@@ -1,0 +1,42 @@
+// plantilla_algoritmo.dot — convención visual estándar para algoritmos y
+// flujogramas clínicos de esta skill. Copia este archivo, cambia los nodos
+// y las etiquetas por el contenido real del algoritmo (extraído de la guía
+// o el artículo), y renderiza con scripts/render_dot.sh.
+//
+// Convención de formas y colores (mantenerla en todos los algoritmos para
+// que el residente reconozca el tipo de paso de un vistazo):
+//   - shape=oval, verde (#2E7D32)   -> inicio / fin / conducta final
+//   - shape=diamond, ámbar (#FFB74D) -> punto de decisión (siempre en forma de pregunta)
+//   - shape=box rounded, azul (#42A5F5) -> acción / estudio / conducta intermedia
+//   - shape=box rounded, rojo (#E57373) -> alarma / criterio de hospitalización o UCI
+//
+// Las etiquetas de las aristas ("Sí" / "No" / umbral cuantitativo) deben
+// citar el criterio exacto de la guía, no una paráfrasis vaga.
+
+digraph algoritmo_clinico {
+  rankdir=TB;
+  bgcolor="white";
+  node [fontname="Helvetica", fontsize=12, margin="0.15,0.1"];
+  edge [fontname="Helvetica", fontsize=10, color="#616161"];
+
+  inicio [label="Punto de entrada clínico\n(ej. motivo de consulta)", shape=oval, style=filled, fillcolor="#2E7D32", fontcolor=white];
+
+  decision1 [label="¿Criterio diagnóstico\ncumplido? (citar umbral exacto)", shape=diamond, style=filled, fillcolor="#FFB74D"];
+
+  accion1 [label="Estudio o conducta\nintermedia (citar cuál)", shape=box, style="rounded,filled", fillcolor="#42A5F5", fontcolor=white];
+
+  alarma1 [label="Criterio de alarma /\nhospitalización (citar cuál)", shape=box, style="rounded,filled", fillcolor="#E57373"];
+
+  final1 [label="Conducta final /\nclasificación", shape=oval, style=filled, fillcolor="#2E7D32", fontcolor=white];
+
+  inicio -> decision1;
+  decision1 -> accion1 [label="Sí"];
+  decision1 -> final1 [label="No"];
+  accion1 -> alarma1 [label="si cumple criterio de alarma"];
+  accion1 -> final1 [label="si no cumple"];
+  alarma1 -> final1;
+
+  // Pie con la fuente — obligatorio en todo algoritmo clínico generado.
+  fuente [label="Fuente: [Nombre de la guía], [Organización], [Año] — [Evidencia]", shape=plaintext, fontsize=9, fontcolor="#616161"];
+  { rank=sink; fuente; }
+}

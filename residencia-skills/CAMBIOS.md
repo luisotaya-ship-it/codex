@@ -1,6 +1,6 @@
 # Mejoras a las skills de residencia — 2026-10-02
 
-Copia de las 16 skills médicas propias. Las 11 modificadas están empaquetadas en `dist/*.skill`
+Copia de las 16 skills médicas propias. Las 10 modificadas están empaquetadas en `dist/*.skill`
 para instalarlas (abrir el archivo → **Save skill**, o subirlo en claude.ai → Settings → Skills).
 
 ## Problemas encontrados y corregidos
